@@ -192,16 +192,16 @@ def api_list_sales(request):
     elif request.method == "POST":
         try:
             content = json.loads(request.body)
-            automobile_vin = content["automobile"]
+            vin = content["automobile"]
             salesperson_id = content["salesperson"]
             customer_id = content["customer"]
 
             # Check if the automobile exists
             try:
-                automobile = AutomobileVO.objects.get(vin=automobile_vin)
+                automobile = AutomobileVO.objects.get(vin=vin)
             except AutomobileVO.DoesNotExist:
                 return JsonResponse(
-                    {"message": "Automobile does not exist", "VIN": automobile_vin},
+                    {"message": "Automobile does not exist"},
                     status=404,
                 )
 
@@ -243,7 +243,11 @@ def api_list_sales(request):
                 status=400,
             )
     else:
-        return JsonResponse({"message": "Method not allowed"}, status=405)
+        return JsonResponse(
+            {"message": "Method Not Allowed"},
+            status=405,
+            )
+
 
 @require_http_methods(["DELETE", "GET"])
 def api_show_sale(request, pk):
