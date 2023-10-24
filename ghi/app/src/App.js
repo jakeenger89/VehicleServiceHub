@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
 import TechnicianList from './TechnicianList';
+import TechnicianForm from './TechnicianForm';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="technicians">
             <Route path="" element={<TechnicianList />} />
+            <Route path="create" element={<TechnicianForm />} />
           </Route>
         </Routes>
       </div>
