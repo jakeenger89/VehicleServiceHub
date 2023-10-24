@@ -9,7 +9,7 @@ class Technician(models.Model):
 
 
 class AutomobileVO(models.Model):
-    vin = models.PositiveSmallIntegerField()
+    vin = models.CharField(max_length=17, default=True)
     sold = models.BooleanField(default=False)
     import_href = models.CharField(max_length=200, unique=True)
 

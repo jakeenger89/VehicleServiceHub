@@ -25,11 +25,11 @@ def poll(repeat=True):
                 AutomobileVO.objects.update_or_create(
                     import_href=autos["href"],
                     defaults={
-                        "color": autos["color"],
-                        "year": autos["year"],
+                        # "color": autos["color"],
+                        # "year": autos["year"],
                         "vin": autos["vin"],
                         "sold": autos["sold"],
-                        "model": autos["model"],
+                        # "model": autos["model"],
                     }
                 )
 
