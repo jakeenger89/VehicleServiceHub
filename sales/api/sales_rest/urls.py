@@ -15,4 +15,4 @@ urlpatterns = [
     path("customers/<int:pk>/", api_show_customer, name="api_show_customer"),
     path("sales/", api_list_sales, name="api_list_sales"),
     path("sales/<int:pk>/", api_show_sale, name="api_show_sale"),
-}
+]
