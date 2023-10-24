@@ -25,7 +25,7 @@ function SalesList() {
   return (
     <div>
       <h1>Sales List</h1>
-      <Link to="/salespeople/add" className="btn btn-primary btn-md">
+      <Link to="/sales/add" className="btn btn-primary btn-md">
         New Sale?
       </Link>
       <table className="table table-striped">

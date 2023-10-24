@@ -14,7 +14,7 @@ function SalesPeopleList() {
           console.error(response);
         }
     }
-  }
+
 
   useEffect(() => {
     fetchData();
@@ -46,6 +46,6 @@ function SalesPeopleList() {
       </table>
     </div>
   );
-}
 
+        }
 export default SalesPeopleList;
