@@ -92,13 +92,15 @@ def api_list_technicians(request):
                 status=400
             )
 
+@require_http_methods(["DELETE"])
+def api_show_technicians(request, pk):
+    if request.method == "DELETE":
+        count, _ = Technician.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
 
 
 
 
-
-
-# def api_show_technicians
 
 # def api_list_appointments
 
