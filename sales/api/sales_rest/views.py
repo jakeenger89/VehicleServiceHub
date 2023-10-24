@@ -1,9 +1,8 @@
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
 import json
-from django.http import JsonResponse, Http404
-from models import Sale, Salesperson, AutomobileVO, Customer
-import requests
+from django.http import JsonResponse
+from sales_rest.models import Sale, Salesperson, AutomobileVO, Customer
 
 
 class AutomobileVOEncoder(ModelEncoder):
@@ -134,7 +133,7 @@ def api_show_salesperson(request, employee_id):
             return JsonResponse({"message": "does not exist"})
 
 
-@require_http_methods({"GET", "PSOT"})
+@require_http_methods({"GET", "POST"})
 def api_list_customers(request):
     if request.method == "GET":
         customers = Customer.objects.all()
@@ -184,46 +183,67 @@ def api_show_customer(request, pk):
 @require_http_methods(["GET", "POST"])
 def api_list_sales(request):
     if request.method == "GET":
-        sale = Sale.objects.all()
+        sales = Sale.objects.all()
         return JsonResponse(
-            {"sale": sale},
+            {"sales": sales},
             encoder=SalesListEncoder,
+            safe=False,
         )
+    elif request.method == "POST":
+        try:
+            content = json.loads(request.body)
+            automobile_vin = content["automobile"]
+            salesperson_id = content["salesperson"]
+            customer_id = content["customer"]
 
-    else:
-        content = json.loads(request.body)
-        try:
-            salesperson = Salesperson.objects.get(id=content["salesperson"])
-            content["salesperson"] = salesperson
+            # Check if the automobile exists
+            try:
+                automobile = AutomobileVO.objects.get(vin=automobile_vin)
+            except AutomobileVO.DoesNotExist:
+                return JsonResponse(
+                    {"message": "Automobile does not exist", "VIN": automobile_vin},
+                    status=404,
+                )
 
-        except Salesperson.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid salesperson"},
-                status=404
+            # Check if the salesperson exists
+            try:
+                salesperson = Salesperson.objects.get(id=salesperson_id)
+            except Salesperson.DoesNotExist:
+                return JsonResponse(
+                    {"message": "Invalid salesperson"},
+                    status=404,
+                )
+
+            # Check if the customer exists
+            try:
+                customer = Customer.objects.get(id=customer_id)
+            except Customer.DoesNotExist:
+                return JsonResponse(
+                    {"message": "Invalid customer"},
+                    status=404,
+                )
+
+            # Create the Sale
+            sale = Sale.objects.create(
+                price=content["price"],
+                automobile=automobile,
+                salesperson=salesperson,
+                customer=customer,
             )
-        try:
-            customer = Customer.objects.get(id=content["customer"])
-            content["customer"] = customer
-        except Customer.DoesNotExist:
+
             return JsonResponse(
-                {"message": "customer does not exist"},
-                status=404
-            )
-        try:
-            automobileVO = AutomobileVO.objects.get(vin=content["automobile"])
-            content["automobile"] = automobileVO
-        except AutomobileVO.DoesNotExist:
-            return JsonResponse(
-                {"message": "Automobile does not exist"},
-                status=404
-            )
-        sale = Sale.objects.create(**content)
-        return JsonResponse(
                 sale,
                 encoder=SalesListEncoder,
                 safe=False,
-        )
+            )
 
+        except json.JSONDecodeError as e:
+            return JsonResponse(
+                {"message": "Invalid JSON data", "error": str(e)},
+                status=400,
+            )
+    else:
+        return JsonResponse({"message": "Method not allowed"}, status=405)
 
 @require_http_methods(["DELETE", "GET"])
 def api_show_sale(request, pk):
