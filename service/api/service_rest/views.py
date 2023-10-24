@@ -23,7 +23,8 @@ class TechnicianListEncoder(ModelEncoder):
     properties = [
         "employee_id",
         "first_name",
-        "last_name"
+        "last_name",
+        "id",
         ]
 
 
@@ -32,7 +33,8 @@ class TechnicianDetailEncoder(ModelEncoder):
     properties = [
         "first_name",
         "last_name",
-        "employee_id"
+        "employee_id",
+        "id",
     ]
 
 
@@ -73,10 +75,22 @@ def api_list_technicians(request):
         technicians = Technician.objects.all()
         return JsonResponse(
             {"technicians": technicians},
-            encoder=AppointmentListEncoder,
+            encoder=TechnicianListEncoder,
         )
-#     else: #POST
-#         ###finish
+    else: #POST
+        content = json.loads(request.body)
+        try:
+            technician = Technician.objects.create(**content)
+            return JsonResponse(
+                technician,
+                encoder=TechnicianDetailEncoder,
+                safe=False,
+            )
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "not a valid technician"},
+                status=400
+            )
 
 
 
