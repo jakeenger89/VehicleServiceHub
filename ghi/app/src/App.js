@@ -4,6 +4,7 @@ import Nav from './Nav';
 import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';
 import AppointmentForm from './AppointmentForm';
+import AppointmentList from './AppointmentList';
 import ManufacturerList from './ManufacturerList';
 import ManufacturerForm from './ManufacturerForm';
 import CustomerForm from './newcustomerform';
@@ -14,6 +15,7 @@ import ModelList from './modelList';
 import ModelForm from './ModelForm';
 import AutomobileForm from './automobileForm';
 import AutomobileList from './automobileList';
+import ServiceHistoryList from './ServiceHistoryList';
 
 function App() {
   return (
@@ -27,7 +29,7 @@ function App() {
             <Route path="add" element={<TechnicianForm />} />
           </Route>
           <Route path="service-appointments">
-            {/* <Route path="" element={<TechnicianList />} /> */}
+            <Route path="" element={<AppointmentList />} />
             <Route path="create" element={<AppointmentForm />} />
           </Route>
           <Route path="manufacturers">
@@ -49,6 +51,9 @@ function App() {
           <Route path="automobiles">
             <Route path="" element={<AutomobileList />} />
             <Route path="create" element={<AutomobileForm />} />
+          </Route>
+          <Route path="service-history">
+            <Route path="" element={<ServiceHistoryList />} />
           </Route>
         </Routes>
       </div>
