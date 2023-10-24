@@ -43,7 +43,6 @@ class AppointmentListEncoder(ModelEncoder):
     properties = [
         "date_time",
         "reason",
-        "status",
         "vin",
         "customer",
         "technician"
@@ -98,10 +97,35 @@ def api_show_technicians(request, pk):
         count, _ = Technician.objects.filter(id=pk).delete()
         return JsonResponse({"deleted": count > 0})
 
+@require_http_methods(["GET", "POST"])
+def api_list_appointments(request, technician_id=None):
+    if request.method == "GET":
+        if technician_id is not None:
+            appointments = Appointment.objects.get(technician=technician_id)
+        else:
+            appointments = Appointment.objects.all()
+        return JsonResponse(
+            {"appointments": appointments},
+            encoder=AppointmentListEncoder,
+        )
+    else: #POST
+        content = json.loads(request.body)
+        try:
+            technician_id = content["technician"]
+            technician = Technician.objects.get(id=technician_id)
+            content["technician"] = technician
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician"},
+                status=400
+            )
 
+        appointment = Appointment.objects.create(**content)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False,
+        )
 
-
-
-# def api_list_appointments
 
 # def api_show_appointments
