@@ -9,7 +9,7 @@ function SalesPeopleList() {
         const response = await fetch("http://localhost:8090/api/salespeople/");
         if (response.ok) {
           const data = await response.json();
-          setSalesPeople(data.salespeople);
+          setSalesPeople(data.salesperson);
         } else {
           console.error(response);
         }

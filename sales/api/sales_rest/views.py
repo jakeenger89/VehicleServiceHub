@@ -19,7 +19,8 @@ class CustomerListEncoder(ModelEncoder):
     model = Customer
     properties = [
         "first_name",
-        "last_name"
+        "last_name",
+
     ]
 
 
@@ -94,12 +95,18 @@ def api_list_customer(request):
     if request.method == "GET":
         customers = Customer.objects.all()
         customers_data = [
-            {"id": customer.id, "first_name": customer.first_name, "last_name": customer.last_name}
+            {
+                "id": customer.id,
+                "first_name": customer.first_name,
+                "last_name": customer.last_name,
+                "address": customer.address,
+                "phone_number": customer.phone_number
+            }
             for customer in customers
         ]
         return JsonResponse(
             {"customers": customers_data},
-            encoder=CustomerListEncoder,
+            encoder=CustomerDetailEncoder,
         )
     else:
         content = json.loads(request.body)

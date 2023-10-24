@@ -23,7 +23,7 @@ function SalesPersonForm() {
         const data = {
             first_name,
             last_name,
-            employee_id: employeeID, // Align with Django model
+            employee_id: employeeID,
         };
 
         const url = 'http://localhost:8090/api/salespeople/';
