@@ -3,6 +3,9 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';
+import AppointmentForm from './AppointmentForm';
+import ManufacturerList from './ManufacturerList';
+import ManufacturerForm from './ManufacturerForm';
 import CustomerForm from './newcustomerform';
 import CustomerList from './customerList';
 import SalesPersonForm from './newsalespersonform';
@@ -22,13 +25,21 @@ function App() {
             <Route path="" element={<TechnicianList />} />
             <Route path="add" element={<TechnicianForm />} />
           </Route>
+          <Route path="service-appointments">
+            {/* <Route path="" element={<TechnicianList />} /> */}
+            <Route path="create" element={<AppointmentForm />} />
+          </Route>
+          <Route path="manufacturers">
+            <Route path="" element={<ManufacturerList />} />
+            <Route path="create" element={<ManufacturerForm />} />
+          </Route>
           <Route path="customers">
             <Route path="" element={<CustomerList />} />
             <Route path="add" element={<CustomerForm />} />
           </Route>
           <Route path="salespeople">
             <Route path="" element={<SalesPersonList />} />
-            <Route path="add" element={<SalesPersonForm/>} />
+            <Route path="add" element={<SalesPersonForm />} />
           </Route>
           <Route path="models">
             <Route path="" element={<ModelList />} />
