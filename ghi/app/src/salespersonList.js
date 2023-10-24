@@ -1,82 +1,50 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-function SalesPersonList() {
-    const [salesperson, setSalesPerson] = useState([]);
-    const [selectedsalesperson, setSelectedSalesPerson] = useState('');
-    const [sales, setSales] = useState([]);
+function SalesPeopleList() {
 
-    const fetchSalesPerson = async () => {
-        const url = "http://localhost:8090/api/salespeople/"
-        const response = await fetch(url);
+    const [salesPeople, setSalesPeople] = useState([]);
+
+    async function fetchData() {
+        const response = await fetch("http://localhost:8090/api/salespeople/");
         if (response.ok) {
-            const data = await response.json();
-            setSalesPerson(data.salesperson);
+          const data = await response.json();
+          setSalesPeople(data.salespeople);
+        } else {
+          console.error(response);
         }
-    };
-
-    const fetchSales = async () => {
-        const url = 'http://localhost:8090/api/sales/';
-        const response = await fetch(url);
-        if (response.ok) {
-            const data = await response.json();
-            setSales(data.sales);
-        }
-    };
-    const handleSalesPersonChange =(event) => {
-        setSelectedSalesPerson(event.target.value);
-    };
+    }
 
     useEffect(() => {
-        fetchSales();
-        fetchSalesPerson();
+        fetchData();
     }, []);
 
     return (
-        <div className="row">
-            <h1 className="gap=3 p-4 mt-4"> Sales People List</h1>
-            <div className="mb-3">
-                <select
-                    onChange={handleSalesPersonChange}
-                    value={selectedsalesperson}
-                    id="salesperson"
-                    name="salesperson"
-                    className="form-select"
-                    required>
-
-                    <option value="">Choose a Salesperson</option>
-                    {salesperson.map((salespersons) => {
-                        return (
-                            <option key={salespersons.id} value={salespersons.id}>
-                                {salespersons.id}
-                            </option>
-                        );
-                    })}
-                </select>
-            </div>
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Salesperson</th>
-                        <th>Customer</th>
-                        <th>VIN</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sales.map((sale) => {
-                        return (
-                            <tr key={sale.id}>
-                                <td>{sale.salesperson}</td>
-                                <td>{sale.customer}</td>
-                                <td>{sale.vin}</td>
-                                <td>{sale.price}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
-        </div>
+      <div>
+        <h1>Salespeople</h1>
+        <Link to="/salespeople/add" className="btn btn-primary btn-md">Add a new Salesperson</Link>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {salesPeople.map(salesperson => {
+            return (
+              <tr key={salesperson.employee_id}>
+                <td>{ salesperson.employee_id }</td>
+                <td>{ salesperson.first_name }</td>
+                <td>{ salesperson.last_name }</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      </div>
     );
-}
+  }
 
-export default SalesPersonList;
+  export default SalesPeopleList;

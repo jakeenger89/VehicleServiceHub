@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 function CustomerList() {
     const [customers, setCustomers] = useState([]);
@@ -17,28 +18,32 @@ function CustomerList() {
     }, []);
 
     return (
-        <table className="table table-striped">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                {customers.map(customer => {
-                    return (
-                        <tr key={customer.id}>
-                            <td>{customer.first_name}</td>
-                            <td>{customer.last_name}</td>
-                            <td>{customer.address}</td>
-                            <td>{customer.phone_number}</td>
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </table>
+        <div className="gap-3 p-2 mt-3">
+            <h1>Customers</h1>
+            <Link to="/customers/add" className="btn btn-primary btn-md">Add A Customer</Link>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {customers.map(customer => {
+                        return (
+                            <tr key={customer.id}>
+                                <td>{customer.first_name}</td>
+                                <td>{customer.last_name}</td>
+                                <td>{customer.address}</td>
+                                <td>{customer.phone_number}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 }
 
