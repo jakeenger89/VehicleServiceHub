@@ -24,6 +24,21 @@ Example of JSON Body for Create Service Appointment:
 	"technician": 10,
 	"date_time": "2023-09-25 06:00"
 }
+What to expect back from Create Service Appointment:
+{
+	"date_time": "2023-09-25 06:00",
+	"reason": "flat tire",
+	"status": "created",
+	"vin": "5164651564",
+	"customer": "Steve",
+	"technician": {
+		"first_name": "first",
+		"last_name": "last",
+		"employee_id": 5636,
+		"id": 10
+	}
+}
+
 Example of JSON Body for Create Technician:
 {
 	"employee_id": 5678,
@@ -31,16 +46,24 @@ Example of JSON Body for Create Technician:
 	"last_name": "Corkum"
 }
 
+What to expect back from Create Technician:
+{
+	"first_name": "Sarah",
+	"last_name": "Corkum",
+	"employee_id": 5678,
+	"id": 14
+}
+
 ## URLs and Ports
 Service microservice:
-- List service appointment: http://localhost:8080/api/appointments/
-- Delete service appointment: http://localhost:8080/api/appointments/<int:pk>/
-- Create service appointment: http://localhost:8080/api/appointments/
-- Finish service appointment: http://localhost:8080/api/appointments/<int:pk>/finish/
-- Cancel service appointment: http://localhost:8080/api/appointments/<ing:pk>/cancel/
-- Delete technician: http://localhost:8080/api/technicians/<int:pk>/
-- Create technician: http://localhost:8080/api/technicians/
-- List technicians: http://localhost:8080/api/technicians/
+- List service appointment:     GET     http://localhost:8080/api/appointments/
+- Delete service appointment:   DELETE  http://localhost:8080/api/appointments/<int:pk>/
+- Create service appointment:   POST    http://localhost:8080/api/appointments/
+- Finish service appointment:   PUT     http://localhost:8080/api/appointments/<int:pk>/finish/
+- Cancel service appointment:   PUT     http://localhost:8080/api/appointments/<ing:pk>/cancel/
+- Delete technician:            DELETE  http://localhost:8080/api/technicians/<int:pk>/
+- Create technician:            POST    http://localhost:8080/api/technicians/
+- List technicians:             GET     http://localhost:8080/api/technicians/
 
 ## Service microservice
 
