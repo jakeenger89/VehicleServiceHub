@@ -18,6 +18,7 @@ import AutomobileList from './automobileList';
 import SalesList from './salesList';
 import NewSaleForm from './newsaleform';
 import SalesPersonHistory from './salespersonHistoryList';
+import ServiceHistoryList from './ServiceHistoryList';
 
 function App() {
   return (
@@ -60,6 +61,9 @@ function App() {
           </Route>
           <Route path="sales-history">
             <Route path="" element={<SalesPersonHistory />} />
+          </Route>
+          <Route path="service-history">
+            <Route path="" element={<ServiceHistoryList />} />
           </Route>
         </Routes>
       </div>
