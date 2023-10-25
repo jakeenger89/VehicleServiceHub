@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function AutomobileList() {
-    const [automobiles, setAutomobiles ] = useState([]);
+    const [automobiles, setAutomobiles] = useState([]);
     const fetchData = async () => {
         const url = 'http://localhost:8100/api/automobiles/';
         const response = await fetch(url);
@@ -40,8 +40,8 @@ function AutomobileList() {
                                 <td>{automobile.color}</td>
                                 <td>{automobile.year}</td>
                                 <td>{automobile.model.name}</td>
-                                <td>{automobile.manufacturer?.name}</td>
-                                <td>{automobile.sold}</td>
+                                <td>{automobile.model.manufacturer.name}</td>
+                                <td>{automobile.sold ? 'Yes' : 'No'}</td>
                             </tr>
                         );
                     })}
@@ -49,7 +49,6 @@ function AutomobileList() {
             </table>
         </div>
     );
-
 }
 
 export default AutomobileList;

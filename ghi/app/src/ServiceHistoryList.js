@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-
 function ServiceHistoryList(props) {
     const [appointments, setAppointments] = useState([]);
     const [searchBarText, setSearchBarText] = useState('');

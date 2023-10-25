@@ -82,7 +82,7 @@ function NewSaleForm({ getSales }) {
               >
                 <option value="">Choose a salesperson...</option>
                 {salespersons.map((person) => (
-                  <option key={person.id} value={person.id}>
+                  <option key={person.employee_id} value={person.employee_id}>
                     {person.first_name} {person.last_name}
                   </option>
                 ))}
