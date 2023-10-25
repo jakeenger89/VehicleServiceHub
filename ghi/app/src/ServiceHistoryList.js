@@ -1,62 +1,109 @@
 import { useState, useEffect } from 'react';
 
-function SalespersonHistory() {
-  const [salesperson, setSalesperson] = useState(0);
-  const [SalesFiltered, setSalesFiltered] = useState([]);
-  const [salespeople, setSalespeople] = useState([]);
+function ServiceHistoryList(props) {
+    const [appointments, setAppointments] = useState([]);
+    const [searchBarText, setSearchBarText] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [automobileVins, setAutomobileVins] = useState([])
 
-  useEffect(() => {
-    // Add your code to fetch salespeople and filtered sales data here
-  }, []);
 
-  const handleSalespersonChange = (event) => {
-    const selectedSalesperson = parseInt(event.target.value);
-    setSalesperson(selectedSalesperson);
+    useEffect(() => {
+        getAllAppointments();
+        getAutomobileVins();
+    }, []);
 
-    // Filter your sales data based on the selected salesperson
-    const filteredSales = yourFilteringLogic(selectedSalesperson);
-    setSalesFiltered(filteredSales);
-  };
+    function handleClickSearch() {
+        setSearchTerm(searchBarText);
+    }
 
-  return (
-    <div className="shadow p-4 mt-4">
-      <h1>Salesperson History</h1>
-      <select
-        onChange={handleSalespersonChange}
-        value={salesperson}
-        name="salesperson"
-        id="salesperson"
-        className="form-select"
-      >
-        <option value="0">Filter Salesperson</option>
-        {salespeople.map((salesperson) => (
-          <option key={salesperson.id} value={salesperson.id}>
-            {salesperson.first_name} {salesperson.last_name}
-          </option>
-        ))}
-      </select>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Salesperson</th>
-            <th>Customer</th>
-            <th>Automobile</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {SalesFiltered.map((sale) => (
-            <tr key={sale.id}>
-              <td>{sale.salesperson.first_name} {sale.salesperson.last_name}</td>
-              <td>{sale.customer.first_name} {sale.customer.last_name}</td>
-              <td>{sale.automobile.vin}</td>
-              <td>{sale.price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+    async function getAllAppointments() {
+
+        const response = await fetch('http://localhost:8080/api/appointments/');
+
+        if (response.ok) {
+            const { appointments } = await response.json();
+            setAppointments(appointments);
+            console.log(appointments)
+        } else {
+            console.error("An error occured fetching the data")
+        }
+    }
+
+    const filteredAppointments = appointments.filter((appointment) => searchTerm.length == 0 || appointment.vin === searchTerm)
+
+    async function getAutomobileVins() {
+        const response = await fetch('http://localhost:8100/api/automobiles/');
+        if (response.ok) {
+            const { autos } = await response.json();
+            const automobileVins = autos.map((automobile) => automobile.vin)
+            setAutomobileVins(automobileVins)
+        } else {
+            console.error("Error getting automobile VIN")
+        }
+    }
+
+    return (
+        <>
+            <h1>Service History</h1>
+            <div className="row">
+                < div className="col-8">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by VIN..."
+                        value={searchBarText}
+                        onChange={(e) => setSearchBarText(e.target.value)}
+                    />
+                </div>
+                <div className="col-4">
+                    <button
+                        className="btn btn-outline-secondary"
+                        type="button"
+                        onClick={handleClickSearch}
+                    >
+                        Search
+                    </button>
+                </div>
+            </div>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>VIN</th>
+                        <th>Is VIP?</th>
+                        <th>Customer</th>
+                        <th>Date and Time</th>
+                        <th>Technician</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredAppointments.map((appointment, index) => {
+                        let isVip;
+                        if (automobileVins.includes(appointment.vin)) {
+                            isVip = "Yes";
+                        } else {
+                            isVip = "No";
+                        }
+
+                        const formattedDateTime = new Date(appointment.date_time).toLocaleString();
+
+                        return (
+                            <tr key={appointment.id + appointment.vin + index}>
+                                <td>{appointment.vin}</td>
+                                <td>{isVip}</td>
+                                <td>{appointment.customer}</td>
+                                <td>{formattedDateTime}</td>
+                                <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>
+                                <td> {appointment.reason}</td>
+                                <td>{appointment.status}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </>
+    );
 }
 
-export default SalespersonHistory;
+export default ServiceHistoryList;
