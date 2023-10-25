@@ -46,21 +46,25 @@ function ServiceHistoryList(props) {
     return (
         <>
             <h1>Service History</h1>
-            <div className="mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search by VIN..."
-                    value={searchBarText}
-                    onChange={(e) => setSearchBarText(e.target.value)}
-                />
-                <button
-                    className="btn btn-outline-secondary"
-                    type="button"
-                    onClick={handleClickSearch}
-                >
-                    Search
-                </button>
+            <div className="row">
+                < div className="col-8">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by VIN..."
+                        value={searchBarText}
+                        onChange={(e) => setSearchBarText(e.target.value)}
+                    />
+                </div>
+                <div className="col-4">
+                    <button
+                        className="btn btn-outline-secondary"
+                        type="button"
+                        onClick={handleClickSearch}
+                    >
+                        Search
+                    </button>
+                </div>
             </div>
             <table className="table table-striped">
                 <thead>
