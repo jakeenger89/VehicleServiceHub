@@ -5,15 +5,16 @@ function SalesPeopleList() {
 
   const [salesPeople, setSalesPeople] = useState([]);
 
-  async function fetchData() {
-    const response = await fetch("http://localhost:8090/api/salespeople/");
-    if (response.ok) {
-      const data = await response.json();
-      setSalesPeople(data.salesperson);
-    } else {
-      console.error(response);
+    async function fetchData() {
+        const response = await fetch("http://localhost:8090/api/salespeople/");
+        if (response.ok) {
+          const data = await response.json();
+          setSalesPeople(data.salesperson);
+        } else {
+          console.error(response);
+        }
     }
-  }
+
 
   useEffect(() => {
     fetchData();
@@ -45,6 +46,6 @@ function SalesPeopleList() {
       </table>
     </div>
   );
-}
 
+        }
 export default SalesPeopleList;
