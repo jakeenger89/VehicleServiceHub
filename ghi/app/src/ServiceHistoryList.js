@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 
 
 function ServiceHistoryList(props) {
-    const [appointments, setAppointment] = useState([]);
+    const [appointments, setAppointments] = useState([]);
+    const [searchBarText, setSearchBarText] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [automobileVins, setAutomobileVins] = useState([])
+
 
     useEffect(() => {
-        if (searchTerm.trim() !== '') {
-            getFilteredAppointments();
-        } else {
-            getAllAppointments();
-        }
-    }, [searchTerm]);
+        getAllAppointments();
+        getAutomobileVins();
+    }, []);
+
+    function handleClickSearch() {
+        setSearchTerm(searchBarText);
+    }
 
     async function getAllAppointments() {
 
@@ -19,28 +23,25 @@ function ServiceHistoryList(props) {
 
         if (response.ok) {
             const { appointments } = await response.json();
-            setAppointment(appointments);
+            setAppointments(appointments);
             console.log(appointments)
         } else {
             console.error("An error occured fetching the data")
         }
     }
 
-    const getFilteredAppointments = async () => {
-        try {
-            const url = `http://localhost:8080/api/appointments/?vin=${encodeURIComponent(searchTerm)}`;
-            const response = await fetch(url);
+    const filteredAppointments = appointments.filter((appointment) => searchTerm.length == 0 || appointment.vin === searchTerm)
 
-            if (response.ok) {
-                const { appointments } = await response.json();
-                setAppointment(appointments);
-            } else {
-                console.error("An error occured fetching the data");
-            }
-        } catch (error) {
-            console.error("An error occured:", error)
+    async function getAutomobileVins() {
+        const response = await fetch('http://localhost:8100/api/automobiles/');
+        if (response.ok) {
+            const { autos } = await response.json();
+            const automobileVins = autos.map((automobile) => automobile.vin)
+            setAutomobileVins(automobileVins)
+        } else {
+            console.error("Error getting VIP status")
         }
-    };
+    }
 
     return (
         <>
@@ -50,13 +51,13 @@ function ServiceHistoryList(props) {
                     type="text"
                     className="form-control"
                     placeholder="Search by VIN..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={searchBarText}
+                    onChange={(e) => setSearchBarText(e.target.value)}
                 />
                 <button
                     className="btn btn-outline-secondary"
                     type="button"
-                    onClick={getFilteredAppointments}
+                    onClick={handleClickSearch}
                 >
                     Search
                 </button>
@@ -65,7 +66,7 @@ function ServiceHistoryList(props) {
                 <thead>
                     <tr>
                         <th>VIN</th>
-                        {/* <th>Is VIP?</th> */}
+                        <th>Is VIP?</th>
                         <th>Customer</th>
                         <th>Date and Time</th>
                         <th>Technician</th>
@@ -74,10 +75,18 @@ function ServiceHistoryList(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {appointments.map((appointment, index) => {
+                    {filteredAppointments.map((appointment, index) => {
+                        let isVip;
+                        if (automobileVins.includes(appointment.vin)) {
+                            isVip = "Yes";
+                        } else {
+                            isVip = "No";
+                        }
+
                         return (
-                            <tr key={appointment.id + index}>
+                            <tr key={appointment.id + appointment.vin + index}>
                                 <td>{appointment.vin}</td>
+                                <td>{isVip}</td>
                                 <td>{appointment.customer}</td>
                                 <td>{appointment.date_time}</td>
                                 <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>

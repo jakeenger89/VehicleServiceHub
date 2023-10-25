@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 function AppointmentList(props) {
     const [appointments, setAppointment] = useState([]);
+    const [automobileVins, setAutomobileVins] = useState([])
 
     async function getAppointments() {
         const response = await fetch('http://localhost:8080/api/appointments/');
@@ -46,8 +47,21 @@ function AppointmentList(props) {
         }
     };
 
+    async function getAutomobileVins() {
+        const response = await fetch('http://localhost:8100/api/automobiles/');
+        if (response.ok) {
+            const { autos } = await response.json();
+            const automobileVins = autos.map((automobile) => automobile.vin)
+            setAutomobileVins(automobileVins)
+        } else {
+            console.error("Error getting VIP status")
+        }
+    }
+
+
     useEffect(() => {
         getAppointments();
+        getAutomobileVins()
     }, []);
 
     return (
@@ -57,7 +71,7 @@ function AppointmentList(props) {
                 <thead>
                     <tr>
                         <th>VIN</th>
-                        {/* <th>Is VIP?</th> */}
+                        <th>Is VIP?</th>
                         <th>Customer</th>
                         <th>Date and Time</th>
                         <th>Technician</th>
@@ -66,9 +80,17 @@ function AppointmentList(props) {
                 </thead>
                 <tbody>
                     {appointments.map((appointment, index) => {
+                        let isVip;
+                        if (automobileVins.includes(appointment.vin)) {
+                            isVip = "Yes";
+                        } else {
+                            isVip = "No";
+                        }
+
                         return (
                             <tr key={appointment.id + index}>
                                 <td>{appointment.vin}</td>
+                                <td>{isVip}</td>
                                 <td>{appointment.customer}</td>
                                 <td>{appointment.date_time}</td>
                                 <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>
