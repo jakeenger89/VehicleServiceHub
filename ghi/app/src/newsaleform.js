@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function NewSaleForm({ getSales }) {
+function NewSaleForm({  }) {
   const [autos, setAutos] = useState([]);
   const [salespersons, setSalespersons] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -26,6 +26,13 @@ function NewSaleForm({ getSales }) {
       .catch((err) => console.log(err));
   }, []);
 
+  // limit user input to 10 for price because its throwing an error
+  const handlePriceChange = (event) => {
+    const inputValue = event.target.value;
+    const trimmedValue = inputValue.slice(0, 9);
+    setPrice(trimmedValue);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const sale = {
@@ -45,7 +52,7 @@ function NewSaleForm({ getSales }) {
       setSelectedAuto('');
       setSelectedSalesperson('');
       setSelectedCustomer('');
-      getSales(); // Optionally, call a function to refresh the list of sales
+      setPrice('');
     }
   };
 
@@ -108,15 +115,15 @@ function NewSaleForm({ getSales }) {
             </div>
             <div className="form-floating mb-3">
               <input
-                type="number"
+                type="text"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={handlePriceChange}
                 placeholder="Price"
                 required
                 className="form-control"
                 id="price"
               />
-              <label htmlFor="price">Price</label>
+              <label htmlFor="price">Price (up to 9 digits)</label>
             </div>
             <button className="btn btn-primary">Create</button>
           </form>
