@@ -15,7 +15,7 @@ Team:
 ## Diagram:
 ![Alt text](Sarah_and_Jake_Project_Beta_Diagram.png)
 
-## API Documentation
+## API Documentation example for Service (appointments/technicians)
 Example of JSON Body for Create Service Appointment:
 {
 	"reason": "flat tire",
@@ -44,15 +44,73 @@ Service microservice:
 
 ## Service microservice
 
-Explain your models and integration with the inventory
-microservice, here.
-
 The service microservice has a Technician model, AutomobileVO model, and Appointment model. The AutomobileVO is a value object based on the inventory's Automobile model. The Automobile model and AutomobileVO model are in two different bounded contexts. The poller is pulling the automobile data from the inventory API and giving it to the AutomobileVO model. The Appointment model in the service microservice has a technician property. This technician data comes from the Technician model in the service microservice.
+
+## API Documentation examples for Sale (sale, customer, and salesperson)
+Create a sale POST: JSON request:
+{
+    "price": 10000,
+    "automobile": "50",
+    "salesperson": "D20",
+    "customer": 1
+}
+Preview example:
+{
+	"salesperson": {
+		"first_name": "Jake ",
+		"last_name": "Enger",
+		"employee_id": "D20"
+	},
+	"customer": {
+		"first_name": "Lucky",
+		"last_name": "Customer",
+		"address": "23232 323pl se Seattle, WA",
+		"phone_number": "564-434-5677"
+	},
+	"price": 10000
+}
+Create a Customer Post: JSON request:
+{
+    "first_name": "Jimmy",
+    "last_name": "Neutron",
+    "address": "123 Main St, City",
+    "phone_number": "555-123-4567"
+}
+Preview example:
+{
+	"id": 5,
+	"first_name": "Jimmy",
+	"last_name": "Neutron"
+}
+Create a Salesperson Post: JSON request:
+{
+    "first_name": "Jim",
+    "last_name": "bob",
+    "employee_id": "4"
+}
+preview example:
+{
+	"first_name": "jim",
+	"last_name": "bob",
+	"employee_id": "4"
+}
+
+
+## URLs and Ports
+Sales microservice:
+- List salespeople	                GET	    http://localhost:8090/api/salespeople/
+- Create a salesperson	            POST	http://localhost:8090/api/salespeople/
+- Delete a specific salesperson	    DELETE	http://localhost:8090/api/salespeople/:id/
+- List customers	                GET	    http://localhost:8090/api/customers/
+- Create a customer	                POST	http://localhost:8090/api/customers/
+- Delete a specific customer	    DELETE	http://localhost:8090/api/customers/:id/
+- List sales	                    GET	    http://localhost:8090/api/sales/
+- Create a sale	                    POST	http://localhost:8090/api/sales/
+- Delete a sale	                    DELETE	http://localhost:8090/api/sales/:id
 
 ## Sales microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+the sales microservice inclues four models, AutomobileVO, Salesperson, Customer, and Sale. each with respected model.char/text fields and foreignkeys. Sales gets information from Customer, Sale, the AutomobileVO is used in poller to check for vin numbers and we can correspond sales with a particular vehicle/automobile via their vin number.
 
 ## Value Objects
 -AutomobileVO
