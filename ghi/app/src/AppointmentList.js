@@ -8,23 +8,24 @@ function AppointmentList(props) {
         const response = await fetch('http://localhost:8080/api/appointments/');
         if (response.ok) {
             const { appointments } = await response.json();
-            setAppointment(appointments);
-            console.log(appointments)
+            const filteredAppointments = appointments.filter(appointment => appointment.status == "created");
+            setAppointment(filteredAppointments);
+            console.log(filteredAppointments)
         } else {
             console.error("An error occured fetching the data")
         }
     }
 
     const cancelAppointment = async (id) => {
-        await updateAppointmentStatus(id, 'canceled');
+        await updateAppointmentStatus(id, 'cancel');
     };
 
     const finishAppointment = async (id) => {
-        await updateAppointmentStatus(id, 'finished');
+        await updateAppointmentStatus(id, 'finish');
     };
 
     const updateAppointmentStatus = async (id, status) => {
-        const appointmentUrl = `http://localhost:8080/api/appointments/${id}`
+        const appointmentUrl = `http://localhost:8080/api/appointments/${id}/${status}/`
 
         try {
             const response = await fetch(appointmentUrl, {

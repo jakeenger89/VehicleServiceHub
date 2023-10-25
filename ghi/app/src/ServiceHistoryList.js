@@ -3,9 +3,20 @@ import { useState, useEffect } from 'react';
 
 function ServiceHistoryList(props) {
     const [appointments, setAppointment] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    async function getAppointments() {
+    useEffect(() => {
+        if (searchTerm.trim() !== '') {
+            getFilteredAppointments();
+        } else {
+            getAllAppointments();
+        }
+    }, [searchTerm]);
+
+    async function getAllAppointments() {
+
         const response = await fetch('http://localhost:8080/api/appointments/');
+
         if (response.ok) {
             const { appointments } = await response.json();
             setAppointment(appointments);
@@ -15,14 +26,41 @@ function ServiceHistoryList(props) {
         }
     }
 
+    const getFilteredAppointments = async () => {
+        try {
+            const url = `http://localhost:8080/api/appointments/?vin=${encodeURIComponent(searchTerm)}`;
+            const response = await fetch(url);
 
-    useEffect(() => {
-        getAppointments();
-    }, []);
+            if (response.ok) {
+                const { appointments } = await response.json();
+                setAppointment(appointments);
+            } else {
+                console.error("An error occured fetching the data");
+            }
+        } catch (error) {
+            console.error("An error occured:", error)
+        }
+    };
 
     return (
         <>
             <h1>Service History</h1>
+            <div className="mb-3">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search by VIN..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={getFilteredAppointments}
+                >
+                    Search
+                </button>
+            </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
