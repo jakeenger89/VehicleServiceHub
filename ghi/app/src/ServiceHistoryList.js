@@ -39,7 +39,7 @@ function ServiceHistoryList(props) {
             const automobileVins = autos.map((automobile) => automobile.vin)
             setAutomobileVins(automobileVins)
         } else {
-            console.error("Error getting VIP status")
+            console.error("Error getting automobile VIN")
         }
     }
 
@@ -83,12 +83,14 @@ function ServiceHistoryList(props) {
                             isVip = "No";
                         }
 
+                        const formattedDateTime = new Date(appointment.date_time).toLocaleString();
+
                         return (
                             <tr key={appointment.id + appointment.vin + index}>
                                 <td>{appointment.vin}</td>
                                 <td>{isVip}</td>
                                 <td>{appointment.customer}</td>
-                                <td>{appointment.date_time}</td>
+                                <td>{formattedDateTime}</td>
                                 <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>
                                 <td> {appointment.reason}</td>
                                 <td>{appointment.status}</td>

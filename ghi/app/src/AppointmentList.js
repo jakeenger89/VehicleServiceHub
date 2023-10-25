@@ -86,13 +86,14 @@ function AppointmentList(props) {
                         } else {
                             isVip = "No";
                         }
+                        const formattedDateTime = new Date(appointment.date_time).toLocaleString();
 
                         return (
                             <tr key={appointment.id + index}>
                                 <td>{appointment.vin}</td>
                                 <td>{isVip}</td>
                                 <td>{appointment.customer}</td>
-                                <td>{appointment.date_time}</td>
+                                <td>{formattedDateTime}</td>
                                 <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>
                                 <td> {appointment.reason}</td>
                                 <td>
