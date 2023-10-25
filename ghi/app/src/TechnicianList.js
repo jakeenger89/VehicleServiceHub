@@ -21,6 +21,7 @@ function TechnicianList(props) {
 
     return (
         <>
+            <h1>Technicians</h1>
             <table className="table table-striped">
                 <thead>
                     <tr>
