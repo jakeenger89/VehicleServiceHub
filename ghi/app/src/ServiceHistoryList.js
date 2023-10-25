@@ -1,57 +1,62 @@
 import { useState, useEffect } from 'react';
 
+function SalespersonHistory() {
+  const [salesperson, setSalesperson] = useState(0);
+  const [SalesFiltered, setSalesFiltered] = useState([]);
+  const [salespeople, setSalespeople] = useState([]);
 
-function ServiceHistoryList(props) {
-    const [appointments, setAppointment] = useState([]);
+  useEffect(() => {
+    // Add your code to fetch salespeople and filtered sales data here
+  }, []);
 
-    async function getAppointments() {
-        const response = await fetch('http://localhost:8080/api/appointments/');
-        if (response.ok) {
-            const { appointments } = await response.json();
-            setAppointment(appointments);
-            console.log(appointments)
-        } else {
-            console.error("An error occured fetching the data")
-        }
-    }
+  const handleSalespersonChange = (event) => {
+    const selectedSalesperson = parseInt(event.target.value);
+    setSalesperson(selectedSalesperson);
 
+    // Filter your sales data based on the selected salesperson
+    const filteredSales = yourFilteringLogic(selectedSalesperson);
+    setSalesFiltered(filteredSales);
+  };
 
-    useEffect(() => {
-        getAppointments();
-    }, []);
-
-    return (
-        <>
-            <h1>Service History</h1>
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>VIN</th>
-                        {/* <th>Is VIP?</th> */}
-                        <th>Customer</th>
-                        <th>Date and Time</th>
-                        <th>Technician</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {appointments.map((appointment, index) => {
-                        return (
-                            <tr key={appointment.id + index}>
-                                <td>{appointment.vin}</td>
-                                <td>{appointment.customer}</td>
-                                <td>{appointment.date_time}</td>
-                                <td>{appointment.technician.first_name} {appointment.technician.last_name}</td>
-                                <td> {appointment.reason}</td>
-                                <td>{appointment.status}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
-        </>
-    );
+  return (
+    <div className="shadow p-4 mt-4">
+      <h1>Salesperson History</h1>
+      <select
+        onChange={handleSalespersonChange}
+        value={salesperson}
+        name="salesperson"
+        id="salesperson"
+        className="form-select"
+      >
+        <option value="0">Filter Salesperson</option>
+        {salespeople.map((salesperson) => (
+          <option key={salesperson.id} value={salesperson.id}>
+            {salesperson.first_name} {salesperson.last_name}
+          </option>
+        ))}
+      </select>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Salesperson</th>
+            <th>Customer</th>
+            <th>Automobile</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SalesFiltered.map((sale) => (
+            <tr key={sale.id}>
+              <td>{sale.salesperson.first_name} {sale.salesperson.last_name}</td>
+              <td>{sale.customer.first_name} {sale.customer.last_name}</td>
+              <td>{sale.automobile.vin}</td>
+              <td>{sale.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-export default ServiceHistoryList;
+export default SalespersonHistory;
