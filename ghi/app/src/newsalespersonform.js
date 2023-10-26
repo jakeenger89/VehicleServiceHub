@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './allforms.css';
 
 function SalesPersonForm() {
     const [first_name, setFirstName] = useState('');
@@ -44,9 +45,10 @@ function SalesPersonForm() {
     }
 
     return (
+        <div className="background-container">
         <div className="row">
             <div className="offset-3 col-6">
-                <div className="shadow p-4 mt-4">
+                <div className="shadow p-4 mt-4 custom-form">
                     <h1>Add a Salesperson</h1>
                     <form onSubmit={handleSubmit} id="create-salesperson-form">
                         <div className="form-floating mb-3">
@@ -92,6 +94,7 @@ function SalesPersonForm() {
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

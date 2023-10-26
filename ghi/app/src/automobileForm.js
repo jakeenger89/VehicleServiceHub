@@ -86,9 +86,10 @@ function AutomobilesForm() {
 
 
     return (
+        <div className="background-container">
         <div className="row">
             <div className="offset-3 col-6">
-                <div className="shadow p-4 mt-4">
+                <div className="shadow p-4 mt-4 custom-form">
                     <h1>New Automobile</h1>
                     <form onSubmit={handleSubmit} id="create-automobile-form">
                         <div className="form-floating mb-3">
@@ -119,6 +120,7 @@ function AutomobilesForm() {
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

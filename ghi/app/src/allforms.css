@@ -1,0 +1,106 @@
+.background-container::before {
+    content: "";
+    background: rgba(59, 87, 74, 0.3);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: difference;
+  }
+
+  .background-container {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-family: "Brush Script MT", cursive;
+    position: relative;
+    z-index: 2;
+
+  }
+  .custom-form {
+    background-color: #77b699;
+    box-shadow: 10px 10px 5px lightblue;
+
+  }
+  .custom-form {
+    background-color: #77b699;
+    box-shadow: 10px 10px 5px rgb(72, 81, 83);
+    border-radius: 10px;
+    padding: 20px;
+
+
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* You can adjust the values for the shadow */
+    transform: translate(0, 0);
+    transition: transform 0.3s;
+  }
+
+
+  .custom-form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .custom-form label {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+.custom-form select,
+.custom-form input {
+  margin-top: 8px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #cecabb;
+  font-size: 16px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+  .custom-form input:focus {
+    background-color: #a3a093
+  }
+
+  .custom-form select {
+    appearance: none;
+  }
+
+  .custom-form button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    box-shadow: 4px 3px 3px #333;
+    background-color: #4e664f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .custom-form button:hover {
+    background-color: #7baa7b;
+  }
+
+  .select-style {
+    border: 1px solid #ccc !important;
+    background-color: #cecabb !important;
+    color: #333 !important;
+    padding: 5px 10px !important;
+  }
+
+  .select-style option {
+    background-color: #cecabb !important;
+    color: #333 !important;
+  }
+  .select-style input:focus{
+    background-color: #a3a093;
+  }
+
+
+  .select-style option:checked {
+    background-color: #007bff;
+    color: #a3a093;
+  }

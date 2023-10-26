@@ -43,9 +43,10 @@ function CustomerForm({ getCustomers }) {
   }
 
   return (
+    <div className="background-container">
     <div className="row">
       <div className="offset-3 col-6">
-        <div className="shadow p-4 mt-4">
+        <div className="shadow p-4 mt-4 custom-form">
           <h1>Create a new Customer</h1>
           <form onSubmit={handleSubmit} id="create-customer-form">
             <div className="form-floating mb-3">
@@ -104,6 +105,7 @@ function CustomerForm({ getCustomers }) {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }

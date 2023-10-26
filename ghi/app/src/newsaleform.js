@@ -57,9 +57,10 @@ function NewSaleForm({  }) {
   };
 
   return (
+    <div className="background-container">
     <div className="row">
-      <div className="offset-3 col-6">
-        <div className="shadow p-4 mt-4">
+      <div className="offset-3 col-6 ">
+        <div className="shadow p-4 mt-4 custom-form">
           <h1>Record a new sale</h1>
           <form onSubmit={handleSubmit} id="create-sale-form">
             <div className="form-floating mb-3">
@@ -129,6 +130,7 @@ function NewSaleForm({  }) {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }
