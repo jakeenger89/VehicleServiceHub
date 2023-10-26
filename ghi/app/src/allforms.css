@@ -32,7 +32,7 @@
     padding: 20px;
 
 
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* You can adjust the values for the shadow */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     transform: translate(0, 0);
     transition: transform 0.3s;
   }
@@ -101,6 +101,24 @@
 
 
   .select-style option:checked {
-    background-color: #007bff;
+    background-color: #e421a9;
     color: #a3a093;
+  }
+
+
+  .navbar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .navbar-brand span {
+    font-size: 1.5rem;
+  }
+
+  .navbar-brand .car-image {
+    width: 50px;
+    height: auto;
+    margin-top: 5px;
   }

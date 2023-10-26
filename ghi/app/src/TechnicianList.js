@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import './alllists.css';
 
 
 function TechnicianList(props) {
@@ -20,9 +22,11 @@ function TechnicianList(props) {
     }, []);
 
     return (
+        <div className="gap-3 p-2 mt-3 background-container">
         <>
             <h1>Technicians</h1>
-            <table className="table table-striped">
+            <Link to="/technicians/add" className="btn btn-primary btn-md">Add a Technician</Link>
+            <table className="table table-striped custom-table">
                 <thead>
                     <tr>
                         <th>Employee ID</th>
@@ -43,6 +47,7 @@ function TechnicianList(props) {
                 </tbody>
             </table>
         </>
+        </div>
     );
 }
 

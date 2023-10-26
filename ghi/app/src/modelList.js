@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import './alllists.css';
+
 function ModelsList() {
   const [models, setModels] = useState([]);
   async function fetchData() {
@@ -14,8 +17,10 @@ function ModelsList() {
       fetchData();
   }, []);
     return (
-      <div><h2>Models List</h2>
-      <table className="table table-striped">
+      <div className="gap-3 p-2 mt-3 background-container">
+        <h2>Models List</h2>
+        <Link to="/models/create/" className="btn btn-primary btn-md">Add new car Model</Link>
+      <table className="table table-striped custom-table">
         <thead>
           <tr>
             <th>Name</th>

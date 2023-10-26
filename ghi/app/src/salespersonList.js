@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import './alllists.css';
 
 function SalesPeopleList() {
   const [salesPeople, setSalesPeople] = useState([]);
@@ -20,12 +21,12 @@ function SalesPeopleList() {
   }, []);
 
   return (
-    <div>
+    <div className="gap-3 p-2 mt-3 background-container">
       <h1>Salespeople</h1>
       <Link to="/salespeople/add" className="btn btn-primary btn-md">
         Add a new Salesperson
       </Link>
-      <table className="table table-striped">
+      <table className="table table-striped custom-table">
         <thead>
           <tr>
             <th>Employee ID</th>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
+import './alllists.css';
 
 function ManufacturerList(props) {
     const [manufacturers, setManufacturers] = useState([]);
@@ -20,9 +21,11 @@ function ManufacturerList(props) {
     }, []);
 
     return (
+        <div className="gap-3 p-2 mt-3 background-container">
         <>
             <h1>Manufacturers</h1>
-            <table className="table table-striped">
+            <Link to="/manufacturers/create/" className="btn btn-primary btn-md">Add a Manufacturer</Link>
+            <table className="table table-striped custom-table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -39,6 +42,7 @@ function ManufacturerList(props) {
                 </tbody>
             </table>
         </>
+        </div>
     );
 }
 

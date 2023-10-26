@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-
+import { Link } from "react-router-dom";
+import './alllists.css';
 
 function AppointmentList(props) {
     const [appointments, setAppointment] = useState([]);
@@ -65,9 +66,11 @@ function AppointmentList(props) {
     }, []);
 
     return (
+        <div className="gap-3 p-2 mt-3 background-container">
         <>
             <h1>Service Appointments</h1>
-            <table className="table table-striped">
+            <Link to="/service-appointments/create" className="btn btn-primary btn-md">Make an Appointment</Link>
+            <table className="table table-striped custom-table">
                 <thead>
                     <tr>
                         <th>VIN</th>
@@ -76,6 +79,8 @@ function AppointmentList(props) {
                         <th>Date and Time</th>
                         <th>Technician</th>
                         <th>Reason</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,6 +113,7 @@ function AppointmentList(props) {
                 </tbody>
             </table>
         </>
+        </div>
     );
 }
 

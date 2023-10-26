@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import './alllists.css';
 
 function AutomobileList() {
     const [automobiles, setAutomobiles] = useState([]);
@@ -18,10 +19,10 @@ function AutomobileList() {
     }, []);
 
     return (
-        <div className="gap-3 p-2 mt-3">
+        <div className="gap-3 p-2 mt-3 background-container">
             <h1>Automobiles</h1>
             <Link to="/automobiles/create" className="btn btn-primary btn-md">Add A New Automobile</Link>
-            <table className="table table-striped">
+            <table className="table table-striped custom-table">
                 <thead>
                     <tr>
                         <th>VIN</th>

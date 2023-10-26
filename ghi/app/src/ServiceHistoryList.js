@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './alllists.css';
 
 function ServiceHistoryList(props) {
     const [appointments, setAppointments] = useState([]);
@@ -43,6 +44,7 @@ function ServiceHistoryList(props) {
     }
 
     return (
+        <div className="gap-3 p-2 mt-3 background-container">
         <>
             <h1>Service History</h1>
             <div className="row">
@@ -65,7 +67,7 @@ function ServiceHistoryList(props) {
                     </button>
                 </div>
             </div>
-            <table className="table table-striped">
+            <table className="table table-striped custom-table">
                 <thead>
                     <tr>
                         <th>VIN</th>
@@ -103,6 +105,7 @@ function ServiceHistoryList(props) {
                 </tbody>
             </table>
         </>
+        </div>
     );
 }
 
