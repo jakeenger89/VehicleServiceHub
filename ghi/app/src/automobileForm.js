@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './allforms.css';
 
 function AutomobilesForm() {
     const [automobiles, setAutomobiles] = useState([]);

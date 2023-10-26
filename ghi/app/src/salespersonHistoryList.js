@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './alllists.css';
 
 const SalesPersonHistory = () => {
     const [salespersons, setSalespersons] = useState([]);
@@ -30,7 +31,7 @@ const SalesPersonHistory = () => {
     };
 
     return (
-        <div>
+        <div className="gap-3 p-2 mt-3 background-container">
             <h1>Salesperson History</h1>
             <select onChange={handleSalespersonChange}>
                 <option>Select a salesperson...</option>
@@ -41,7 +42,7 @@ const SalesPersonHistory = () => {
                 ))}
             </select>
             {selectedSalesperson && (
-                <table className="table">
+                <table className="table custom-table">
                     <thead>
                         <tr>
                             <th scope="col">Salesperson</th>

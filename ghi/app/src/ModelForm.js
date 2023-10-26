@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './allforms.css';
 
 function ModelForm(props) {
     const [ModelName, setModelName] = useState('');
@@ -66,9 +67,9 @@ function ModelForm(props) {
     }, []);
 
     return (
-        <div className="row">
+        <div className="row background-container">
             <div className="offset-3 col-6">
-                <div className="shadow p-4 mt-4">
+                <div className="shadow p-4 mt-4 custom-form">
                     <h1>Create a vehicle model</h1>
                     <form onSubmit={handleSubmit} id="technician-form">
                         <div className="form-floating mb-3">
